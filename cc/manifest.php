@@ -4,7 +4,6 @@ require_once('base.php');
 
 class Manifest extends Base
 {
-
   private $book_structure = null;
   private $version = null;
   private $manifest = null;
@@ -20,20 +19,6 @@ class Manifest extends Base
   private $tmp_file = null;
 
   private static $templates = [
-    "1.1" => [
-      'manifest' => '/templates/cc_1_1/manifest.xml',
-      'lti_link' => '/templates/cc_1_2/lti_link.xml',
-      'topic' => '/templates/cc_1_1/topic.xml',
-      'web_link' => '/templates/cc_1_1/web_link.xml',
-      'assignment' => '/templates/cc_1_3/assignment.xml', // not actually valid in CC 1.1
-    ],
-    "1.2" => [
-      'manifest' => '/templates/cc_1_2/manifest.xml',
-      'lti_link' => '/templates/cc_1_2/lti_link.xml',
-      'topic' => '/templates/cc_1_2/topic.xml',
-      'web_link' => '/templates/cc_1_2/web_link.xml',
-      'assignment' => '/templates/cc_1_3/assignment.xml', // not actually valid in CC 1.2
-    ],
     "1.3" => [
       'manifest' => '/templates/cc_1_3/manifest.xml',
       'lti_link' => '/templates/cc_1_3/lti_link.xml',
@@ -51,18 +36,6 @@ class Manifest extends Base
   ];
 
   private static $resource_types = [
-      "1.1" => [
-          'lti_link' => 'imsbasiclti_xmlv1p0',
-          'topic' => 'imsdt_xmlv1p1',
-          'web_link' => 'imswl_xmlv1p1',
-          'assignment' => 'assignment_xmlv1p0',
-      ],
-      "1.2" => [
-          'lti_link' => 'imsbasiclti_xmlv1p0',
-          'topic' => 'imsdt_xmlv1p2',
-          'web_link' => 'imswl_xmlv1p2',
-          'assignment' => 'assignment_xmlv1p0',
-      ],
       "1.3" => [
           'lti_link' => 'imsbasiclti_xmlv1p0',
           'topic' => 'imsdt_xmlv1p3',
@@ -77,9 +50,8 @@ class Manifest extends Base
       ],
   ];
 
-  public static $available_options = ['inline', 'include_fm', 'include_bm', 'export_flagged_only',
-                                      'use_custom_vars', 'include_parts', 'include_guids',
-                                      'include_topics', 'include_assignments', 'use_web_links'];
+  public static $available_options = ['inline', 'use_custom_vars', 'include_parts', 'include_guids',
+                                      'use_web_links'];
 
   public function __construct($structure, $options=[]) {
     $this->book_structure = $structure;
@@ -148,12 +120,10 @@ class Manifest extends Base
     </item>
 XML;
 
-    if ($this->options['include_fm']) {
       $fm = $this->book_structure['front-matter'];
       if ($this->item_pages($fm) != '') {
         $items .= sprintf($template, 'frontmatter', 'Front Matter', $this->item_pages($fm));
       }
-    }
 
     foreach ($this->book_structure['part'] as $part) {
       if ($this->item_pages($part) != '') {
@@ -161,12 +131,11 @@ XML;
       }
     }
 
-    if ($this->options['include_bm']) {
       $bm = $this->book_structure['back-matter'];
       if ($this->item_pages($bm) != '') {
         $items .= sprintf($template, 'backmatter', 'Back Matter', $this->item_pages($bm));
       }
-    }
+
     return $items;
   }
 
@@ -234,9 +203,9 @@ XML;
   }
 
   private function resource_type($page){
-    if($this->options['include_topics'] && $this->is_discussion($page)){
+    if($this->is_discussion($page)){
       return self::$resource_types[$this->version]['topic'];
-    } else if($this->options['include_assignments'] && $this->is_assignment($page)){
+    } else if($this->is_assignment($page)){
       return self::$resource_types[$this->version]['assignment'];
     } else if ($this->options['use_web_links']) {
       return self::$resource_types[$this->version]['web_link'];
@@ -250,9 +219,7 @@ XML;
   }
 
   private function is_assignment($page){
-    return (0 === strpos($page['post_title'], 'Assignment:') ||
-            0 === strpos($page['post_title'], 'Cerego:') ||
-            0 === strpos($page['post_title'], 'OHM:'));
+    return (0 === strpos($page['post_title'], 'Assignment:'));
   }
 
   private function lti_resources() {
@@ -265,11 +232,9 @@ XML;
         </resource>
 XML;
 
-    if ($this->options['include_fm']) {
       foreach ($this->book_structure['front-matter'] as $fm) {
         $resources .= sprintf($template, $this->identifier($fm), $this->resource_type($fm), $this->resource_metadata($fm), $this->file_or_link_xml($fm));
       }
-    }
     foreach ($this->book_structure['part'] as $part) {
       if ($this->options['include_parts']) {
         $resources .= sprintf($template, $this->identifier($part), $this->resource_type($part), $this->resource_metadata($part), $this->file_or_link_xml($part));
@@ -280,11 +245,9 @@ XML;
         }
       }
     }
-    if ($this->options['include_bm']) {
       foreach ($this->book_structure['back-matter'] as $bm) {
         $resources .= sprintf($template, $this->identifier($bm), $this->resource_type($bm), $this->resource_metadata($bm), $this->file_or_link_xml($bm));
       }
-    }
     return $resources;
   }
 
@@ -397,11 +360,9 @@ XML;
   }
 
   private function add_resource_files($zip) {
-    if ($this->options['include_fm']) {
       foreach ($this->book_structure['front-matter'] as $fm) {
         $zip->addFromString($this->identifier($fm) . '.xml', $this->resource_xml($fm, true));
       }
-    }
     foreach ($this->book_structure['part'] as $part) {
       if ($this->options['include_parts']) {
         $zip->addFromString($this->identifier($part) . '.xml', $this->resource_xml($part, true));
@@ -412,17 +373,15 @@ XML;
         }
       }
     }
-    if ($this->options['include_bm']) {
       foreach ($this->book_structure['back-matter'] as $bm) {
         $zip->addFromString($this->identifier($bm) . '.xml', $this->resource_xml($bm, true));
       }
-    }
   }
 
   private function resource_xml($page, $add_xml_header=false) {
-    if($this->options['include_topics'] && $this->is_discussion($page)){
+    if($this->is_discussion($page)){
       return $this->topic_xml($page, $add_xml_header);
-    } else if($this->options['include_assignments'] && $this->is_assignment($page)){
+    } else if($this->is_assignment($page)){
       return $this->assignment_xml($page, $add_xml_header);
     } else if ($this->options['use_web_links']) {
       return $this->web_link_xml($page, $add_xml_header);
@@ -490,12 +449,7 @@ XML;
   }
 
   private function export_page($page) {
-    if ($this->options['export_flagged_only']) {
       return $page['export'] == '1';
-    }
-    else {
-      return true;
-    }
   }
 
   public function __toString() {

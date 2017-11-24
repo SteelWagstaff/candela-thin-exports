@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Candela Thin Exports
+Plugin Name: Thin CC Exporter
 Description: A simple plugin to export Pressbooks books as thin cartridges with deep links to each page.
 Version: 0.1
-Author: Lumen Learning
-Author URI: http://lumenlearning.com
+Author: Lumen Learning & Steel Wagstaff
+Author URI: https://lumenlearning.com & https://steelwagstaff.info
 */
 require_once('thincc_manage.php');
 require_once('cc/manifest.php');
@@ -68,28 +68,6 @@ function thincc_ajax()
     header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
 
     echo '<pre>', htmlentities($manifest), '</pre>';
-  } else {
-    if( !isset($options['version']) ){
-      $options['version'] = '1.2';
-    }
-    $manifest = new \CC\Manifest(\PressBooks\Book::getBookStructure('', true), $options);
-    $manifest->build_manifest();
-
-    if( $options['inline'] ){
-      $file = $manifest->build_flat_file();
-
-      header('Content-Type: text/xml');
-      header('Content-Length: ' . filesize($file));
-      header('Content-Disposition: attachment; filename="' . $filename . '.xml"');
-      readfile($file);
-    } else {
-      $file = $manifest->build_zip();
-
-      header('Content-Type: application/vnd.ims.imsccv1p2+application/zip');
-      header('Content-Length: ' . filesize($file));
-      header('Content-Disposition: attachment; filename="' . $filename . '.zip"');
-      readfile($file);
-    }
   }
 }
 
