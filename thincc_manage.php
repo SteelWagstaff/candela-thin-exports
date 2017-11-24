@@ -30,16 +30,18 @@ global $wpdb;
 
       <form id="thincc-form" action="" method="post">
           <div class="instructions">
-            <p>This export plugin will produce a Thin Common Cartridge which you can use to import a Pressbook into a Learning Management System. By default, the plugin will produce a Thin CC with LTI links, and will include all chapters in the book (including front and back matter) which have been selected for export. The export can also create 'discussion' and 'assignment' activities from chapters in your book. To do this, the title of the chapter should be prefaced with 'Discussion:' or 'Assignment:', respectively.</p>
+            <p>This export plugin will produce a Thin Common Cartridge which you can use to import a Pressbook into a Learning Management System.</p>
+            <p>By default, the plugin will produce a Thin CC with LTI links, and will include all chapters in the book (including front and back matter) which have been selected for export. To use these LTI links, you'll need to add a plugin which allows Pressbooks to act as an LTI consumer and configure Pressbooks as an LTI app with your LMS.</p>
+            <p>To use simple web links instead of LTI links, check the option below. The export can also create 'discussion' and 'assignment' activities from chapters in your book. To do this, the title of the chapter should be prefaced with 'Discussion:' or 'Assignment:', respectively.</p>
           <div class="options">
-            <div><input name="use_web_links" id="use_web_links" type="checkbox" /><label for="use_web_links">Use normal web links instead of LTI links</label></div>-->
+            <div><input name="use_web_links" id="use_web_links" type="checkbox" /><label for="use_web_links">Use normal web links instead of LTI links</label></div>
             <div><input name="include_parts" id="include_parts" type="checkbox" /><label for="include_parts">Include links to Parts</label></div>
 <!-- remove ?           <div><input name="include_guids" id="include_guids" type="checkbox" /><label for="include_guids">Include GUIDs</label></div>
 -->
             <div><label for="cc_version_selector">CC Version:</label>
               <select id="cc_version_selector" name="version">
-                <option value="1.3" selected>1.3 (Canvas/Sakai/D2L)</option>
-                <option value="flat">Flat CC (For Lumen Pre-Processing)</option>
+                <option value="1.3" selected>1.3</option>
+                <option value="flat">Flat CC</option>
               </select>
             </div>
           </div>

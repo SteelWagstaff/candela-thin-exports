@@ -3,8 +3,8 @@
 Plugin Name: Thin CC Exporter
 Description: A simple plugin to export Pressbooks books as thin cartridges with deep links to each page.
 Version: 0.1
-Author: Lumen Learning & Steel Wagstaff
-Author URI: https://lumenlearning.com & https://steelwagstaff.info
+Author: Lumen Learning
+Author URI: https://lumenlearning.com
 */
 require_once('thincc_manage.php');
 require_once('cc/manifest.php');
