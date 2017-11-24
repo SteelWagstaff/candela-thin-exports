@@ -69,6 +69,29 @@ function thincc_ajax()
 
     echo '<pre>', htmlentities($manifest), '</pre>';
   }
+  else {
+    if( !isset($options['version']) ){
+      $options['version'] = '1.3';
+    }
+    $manifest = new \CC\Manifest(\PressBooks\Book::getBookStructure('', true), $options);
+    $manifest->build_manifest();
+
+    if( $options['inline'] ){
+      $file = $manifest->build_flat_file();
+
+      header('Content-Type: text/xml');
+      header('Content-Length: ' . filesize($file));
+      header('Content-Disposition: attachment; filename="' . $filename . '.xml"');
+      readfile($file);
+    } else {
+      $file = $manifest->build_zip();
+
+      header('Content-Type: application/vnd.ims.imsccv1p3+application/zip');
+      header('Content-Length: ' . filesize($file));
+      header('Content-Disposition: attachment; filename="' . $filename . '.zip"');
+      readfile($file);
+    }
+}
 }
 
 function process_thincc_options($data){
