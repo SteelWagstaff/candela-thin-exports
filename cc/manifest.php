@@ -250,6 +250,17 @@ XML;
     return $resources;
   }
 
+  private function resource_metadata($page){
+      $metadata = "";
+      $is_instructor_only = $page['post_status'] == 'private';
+      if ($is_instructor_only) {
+        $metadata = "\n<metadata>" . $this->instructor_only_xml() . "\n</metadata>";
+      }
+
+      return $metadata;
+    }
+
+
   private function file_or_link_xml($page) {
     if(!$this->options['inline']) {
       return '<file href="' . $this->identifier($page) . '.xml"/>';
