@@ -30,7 +30,7 @@ global $wpdb;
 
       <form id="thincc-form" action="" method="post">
           <div class="instructions">
-            <p>This export plugin will produce a Thin Common Cartridge which you can use to import a Pressbook into a Learning Management System.</p>
+            <p>This export plugin will produce a Thin Common Cartridge (version 1.3) which you can use to import a Pressbook into a Learning Management System.</p>
             <p>By default, the plugin will produce a Thin CC with LTI links, and will include all chapters in the book (including front and back matter) which have been selected for export. To use these LTI links, you'll need to add a plugin which allows Pressbooks to act as an LTI consumer and configure Pressbooks as an LTI app with your LMS.</p>
             <p>To use simple web links instead of LTI links, check the option below. The export can also create 'discussion' and 'assignment' activities from chapters in your book. To do this, the title of the chapter should be prefaced with 'Discussion:' or 'Assignment:', respectively.</p>
           <div class="options">

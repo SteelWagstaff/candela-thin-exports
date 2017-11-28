@@ -17,9 +17,6 @@ if ( ! defined( 'CC_EXPORT_PLUGIN_URL' ) ) {
   define( 'CC_EXPORT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
-include CC_EXPORT_PLUGIN_DIR . 'includes/api_endpoint.php';
-
-
 register_activation_hook(__FILE__, 'install_thin_exports');
 function install_thin_exports()
 {

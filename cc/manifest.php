@@ -250,55 +250,6 @@ XML;
     return $resources;
   }
 
-  private function resource_metadata($page){
-    $metadata = "";
-
-    $has_guids = $this->options['include_guids'] && !empty($this->get_guids($page)) && $this->get_guids($page) !== array("");
-    $is_instructor_only = $page['post_status'] == 'private';
-
-    if ($is_instructor_only || $has_guids) {
-      $metadata = "\n<metadata>";
-      if ($has_guids) {
-        $metadata = $metadata . $this->guid_xml($page);
-      }
-      if ($is_instructor_only) {
-        $metadata = $metadata . $this->instructor_only_xml();
-      }
-      $metadata = $metadata . "\n</metadata>";
-    }
-
-    return $metadata;
-  }
-
-  private function instructor_only_xml() {
-    return <<<XML
-
-              <lom:lom>
-                 <lom:educational>
-                      <lom:intendedEndUserRole>
-                       <lom:source>IMSGLC_CC_Rolesv1p2</lom:source>
-                       <lom:value>Instructor</lom:value>
-                    </lom:intendedEndUserRole>
-                 </lom:educational>
-              </lom:lom>
-XML;
-  }
-
-  // Generates CC GUID metadata based on: http://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html#toc-55
-  private function guid_xml($page) {
-    $template = <<<XML
-
-              <curriculumStandardsMetadataSet xmlns="/xsd/imscsmetadata_v1p0">
-                <curriculumStandardsMetadata providerId="lumenlearning.com">
-                  <setOfGUIDs>%s
-                  </setOfGUIDs>
-                </curriculumStandardsMetadata>
-              </curriculumStandardsMetadataSet>
-XML;
-
-    return sprintf($template, $this->inner_guid_labels_xml($page));
-  }
-
   private function file_or_link_xml($page) {
     if(!$this->options['inline']) {
       return '<file href="' . $this->identifier($page) . '.xml"/>';
@@ -306,42 +257,6 @@ XML;
     else if($this->options['inline']) {
       return $this->resource_xml($page);
     }
-  }
-
-  private function inner_guid_labels_xml($page) {
-    $guids = '';
-    $guids_array = array($this->get_guids($page));
-    $template = <<<XML
-                    <labelledGUID>
-                      <GUID>%s</GUID>
-                    </labelledGUID>
-XML;
-
-    if (!empty($guids_array)) {
-      foreach ($guids_array as $data) {
-        foreach ($data as $guid){
-          $guids .= sprintf("\n" . $template, $guid);
-        }
-      }
-      return $guids;
-    }
-    else {
-      return '';
-    }
-  }
-
-  private function get_guids($page) {
-    if ($this->guids_cache === null) {
-      $this->guids_cache = [];
-      global $wpdb;
-      $sql = $wpdb->prepare( "SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s", 'CANDELA_OUTCOMES_GUID' );
-
-      foreach ($wpdb->get_results( $sql, ARRAY_A ) as $val) {
-        $val['meta_value'] = str_replace(' ', '', $val['meta_value']);
-        $this->guids_cache[$val['post_id']] = explode(",", $val['meta_value']);
-      }
-    }
-    return array_key_exists($page['ID'], $this->guids_cache) ? $this->guids_cache[$page['ID']] : [];
   }
 
   private function get_points_possible($page, $default) {
