@@ -50,12 +50,11 @@ class Manifest extends Base
       ],
   ];
 
-  public static $available_options = ['inline', 'use_custom_vars', 'include_parts', 'include_guids',
-                                      'use_web_links'];
+  public static $available_options = ['inline', 'include_parts', 'use_web_links'];
 
   public function __construct($structure, $options=[]) {
     $this->book_structure = $structure;
-    $this->version = isset($options['version']) ? $options['version'] : '1.3';
+    $this->version = "1.3";
     $this->manifest = self::get_manifest_template();
     $this->lti_link_template = $this->get_lti_link_template();
     $this->web_link_template = $this->get_web_link_template();

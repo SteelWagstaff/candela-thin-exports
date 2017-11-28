@@ -36,14 +36,6 @@ global $wpdb;
           <div class="options">
             <div><input name="use_web_links" id="use_web_links" type="checkbox" /><label for="use_web_links">Use normal web links instead of LTI links</label></div>
             <div><input name="include_parts" id="include_parts" type="checkbox" /><label for="include_parts">Include links to Parts</label></div>
-<!-- remove ?           <div><input name="include_guids" id="include_guids" type="checkbox" /><label for="include_guids">Include GUIDs</label></div>
--->
-            <div><label for="cc_version_selector">CC Version:</label>
-              <select id="cc_version_selector" name="version">
-                <option value="1.3" selected>1.3</option>
-                <option value="flat">Flat CC</option>
-              </select>
-            </div>
           </div>
 
           <div class="submit">
