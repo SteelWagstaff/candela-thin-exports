@@ -4,12 +4,7 @@ A plugin that extends Pressbooks export functionality.
 
 ## Synopsis
 
-[Pressbooks](https://github.com/pressbooks/pressbooks) is a plugin that turns
-your Wordpress multisite installation into a book publishing platform.
-Thin CC Exporter allows users to export books as a Thin Common Cartridge. The
-plugin currently exports to CC 1.3, and can produce zip files with either LTI or
-simple web links. In order to use the LTI links, you'll need to configure Pressbooks
-to act as an LTI provider, which requires additional plugins.
+[Pressbooks](https://github.com/pressbooks/pressbooks) is a plugin that turns your Wordpress multisite installation into a book publishing platform. Thin CC Exporter allows users to export books as a Thin Common Cartridge. The plugin currently exports to CC 1.3, and can produce zip files with either LTI or simple web links. In order to use the LTI links, you'll need to configure Pressbooks to act as an LTI provider, which requires additional plugins (for example, https://github.com/lumenlearning/lti and https://github.com/lumenlearning/candela-lti)
 
 ## Installation
 
