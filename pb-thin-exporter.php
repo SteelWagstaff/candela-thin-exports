@@ -28,7 +28,7 @@ function install_thin_exports()
 add_action('admin_menu', 'thincc_admin_page');
 function thincc_admin_page()
 {
-  $plugin_page = add_submenu_page('pb-export', 'Export Common Cartridge', 'Export Common Cartridge', 'export', basename(__FILE__), 'thincc_manage');
+  $plugin_page = add_submenu_page('pb_export', 'Export Common Cartridge', 'Export Common Cartridge', 'edit_posts', basename(__FILE__), 'thincc_manage');
   add_action('load-' . $plugin_page, 'thincc_add_js');
 }
 
