@@ -12,7 +12,7 @@ A plugin that extends Pressbooks export functionality.
 
 1. Download or clone Thin CC Exporter into your wordpress multisite plugins directory: `/path/to/wordpress/wp-content/plugins`
 1. Log in to your Wordpress multisite instance and navigate to `Network Admin > Plugins` and activate the Thin CC Exporter plugin
-1. Navigate to `wp-admin/tools.php?page=pb-thin-exporter.php` on your Pressbooks install in your browser
+1. Navigate to `wp-admin/export.php?page=pb-thin-exporter.php` on your Pressbooks install in your browser
 
 ## License
 
