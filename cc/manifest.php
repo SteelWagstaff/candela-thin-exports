@@ -190,10 +190,7 @@ XML;
   }
 
   private function create_launch_url($page) {
-    if ($this->options['use_custom_vars']) {
-      return $this->get_base_url();
-    }
-    else if ($this->use_page_name_launch_url) {
+    if ($this->use_page_name_launch_url) {
       return sprintf($this->get_base_url(), $page['post_name']);
     }
     else {
@@ -372,7 +369,7 @@ XML;
     }
 
     $content = $content = apply_filters( 'the_content', get_post_field('post_content', $page['ID'] ));
-    return sprintf($template, $this->identifier($page), $page['post_title'], $launch_url, $points_possible, ENT_XML1);
+    return sprintf($template, $this->identifier($page), $page['post_title'], $launch_url, $launch_url, ENT_XML1);
   }
 
   private function export_page($page) {
