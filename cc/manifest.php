@@ -357,7 +357,7 @@ XML;
   }
 
   private function assignment_xml($page, $add_xml_header=false) {
-    $launch_rul = $this->create_launch_url($page);
+    $launch_url = $this->create_launch_url($page);
 
     $template = "\n" . $this->assignment_template;
     if ($add_xml_header) {
@@ -369,7 +369,7 @@ XML;
     }
 
     $content = $content = apply_filters( 'the_content', get_post_field('post_content', $page['ID'] ));
-    return sprintf($template, $this->identifier($page), $page['post_title'], $launch_url, $launch_url, ENT_XML1);
+    return sprintf($template, $this->identifier($page), $page['post_title'], $launch_url, ENT_XML1);
   }
 
   private function export_page($page) {
