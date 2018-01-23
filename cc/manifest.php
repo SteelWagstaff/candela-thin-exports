@@ -249,11 +249,6 @@ XML;
 
   private function resource_metadata($page){
       $metadata = "";
-      $is_instructor_only = $page['post_status'] == 'private';
-      if ($is_instructor_only) {
-        $metadata = "\n<metadata>" . $this->instructor_only_xml() . "\n</metadata>";
-      }
-
       return $metadata;
     }
 
