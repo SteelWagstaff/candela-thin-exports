@@ -5,7 +5,7 @@ require_once('base.php');
 class Manifest extends Base
 {
   private $book_structure = null;
-  private $version = null;
+  private $version = "1.3"; // hardcodes version to 1.3
   private $manifest = null;
   private $lti_link_template = null;
   private $web_link_template = null;
@@ -54,7 +54,6 @@ class Manifest extends Base
 
   public function __construct($structure, $options=[]) {
     $this->book_structure = $structure;
-    $this->version = "1.3";
     $this->manifest = self::get_manifest_template();
     $this->lti_link_template = $this->get_lti_link_template();
     $this->web_link_template = $this->get_web_link_template();
@@ -174,10 +173,8 @@ XML;
 
   private function get_base_url() {
     $blog_id = get_current_blog_id();
-    if($this->options['use_custom_vars']) {
-      return get_site_url(1) . '/api/lti/' . $blog_id;
-    }
-    else if ($this->use_page_name_launch_url) {
+
+    if ($this->use_page_name_launch_url) {
       return get_site_url(1) . '/api/lti/' . $blog_id . '?page_title=chapter%%2F%s';
     }
     else {
@@ -326,12 +323,8 @@ XML;
       $template = '<?xml version="1.0" encoding="UTF-8"?>' . $template;
     }
 
-    if ($this->options['use_custom_vars']) {
-      $custom_variables = '<blti:custom><lticm:property name="page_id">' . $page['ID'] . '</lticm:property></blti:custom>';
-    }
-    else {
-      $custom_variables = '';
-    }
+    $custom_variables = '';
+
     return sprintf($template, $page['post_title'], $launch_url, $custom_variables);
   }
 

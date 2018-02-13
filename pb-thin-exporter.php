@@ -48,12 +48,8 @@ function thincc_ajax()
   $sitename = sanitize_key(get_bloginfo('name'));
   if (!empty($sitename)) $sitename .= '-';
   $options = process_thincc_options($_POST);
-  $filename = $sitename . $options['version'] . '-' . date('Y-m-d');
+  $filename = $sitename . '-' . date('Y-m-d');
 
-  if ($options['version'] == 'flat') {
-    $options['inline'] = true;
-    $options['version'] = "1.3";
-  }
 
   if(isset($_POST['cc_download']) && $_POST['cc_download'] == '0') {
     $options['inline'] = true;
