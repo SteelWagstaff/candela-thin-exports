@@ -1,16 +1,16 @@
 {
     "name": "steelwagstaff/candela-thin-exports",
-    "description": "A simple plugin to export Pressbooks books as thin cartridges with deep links to each page.",
+    "description": "A plugin which allows users to create Thin Common Cartridge Exports for Pressbooks titles. This plugin is based largely on Lumen Learning's Candela Thin Exports plugin.",
     "homepage": "https://github.com/SteelWagstaff/candela-thin-exports/",
     "license": "MIT",
     "authors": [
         {
-            "name": "Lumen Learning",
-            "homepage": "http://lumenlearning.com"
-        },
-        {
             "name": "Steel Wagstaff",
             "homepage": "https://github.com/SteelWagstaff/"
+        },
+        {
+            "name": "Lumen Learning",
+            "homepage": "http://lumenlearning.com"
         }
     ],
     "type": "wordpress-plugin",
