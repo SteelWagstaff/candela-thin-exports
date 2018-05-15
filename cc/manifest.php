@@ -175,10 +175,10 @@ XML;
     $blog_id = get_current_blog_id();
 
     if ($this->use_page_name_launch_url) {
-      return get_site_url(1) . '/api/lti/' . $blog_id . '?page_title=chapter%%2F%s';
+      return get_home_url(1) . '/api/lti/' . $blog_id . '?page_title=chapter%%2F%s';
     }
     else {
-      return get_site_url(1) . '/api/lti/' . $blog_id . '?page_id=%s';
+      return get_home_url(1) . '/api/lti/' . $blog_id . '?page_id=%s';
     }
   }
 
